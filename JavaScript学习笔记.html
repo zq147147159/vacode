@@ -1,0 +1,661 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+</head>
+
+<body>
+<script type="text/JavaScript">
+// function sum(){
+//     var result = 0;
+//     for(var i = 0; i < arguments.length; i++){
+//         result += arguments[i];
+//     }
+//     console.log(result);
+// }
+// sum(1,2,3,4,5,6,7,8,9);
+
+// function scream(jiaocheng){
+//     switch (jiaocheng) {
+//         case "dog":
+//             document.write('汪');
+//             return;
+//         case "cat":
+//             document.write('喵');
+//             return;
+//     }
+// }
+
+// JS中==和===区别
+// 简单来说： == 代表相同， ===代表严格相同（数据类型和值都相等）。
+// 【理解原理】： 当进行双等号比较时候，先检查两个操作数数据类型，如果相同，则进行===比较，如果不同，则愿意为你进行一次类型转换，转换成相同类型后再进行比较，而===比较时，如果类型不同，直接就是false。
+// 从这个过程来看，大家也能发现，某些情况下我们使用===进行比较效率要高些，因此，没有歧义的情况下，不会影响结果的情况下，在JS中首选===进行逻辑比较。
+// 操作数1 == 操作数2， 操作数1 === 操作数2
+
+// “&&”与运算符
+// 两个表达式：先看第一个表达式转换成布尔值的结果是否为真，如果结果为真，那么它会看第二个表达式转换为布尔值的结果，
+//如果只有两个表达式的话，只看第二个表达式，就可以返回该表达式的值了，如果第一位布尔值为 false，不看后面的，返回第一个表达式的值就可以了
+// “&&”放在 if 中的，全真才为真，&&是并且的意思
+
+// “||”或运算符
+// 看第一个表达式是否为真，如果为真，则返回第一个值，碰到真就返回
+// 如果第一个表达式是假，就看第二个表达式，如果第二个是最后一个，就返回第二个的值
+// “||”放在 if 中是或者的意思，有一个是真就可以了
+
+// “!“非运算符，否的意思。
+// 先转成布尔值，再取反
+
+//字符串 number string  boolean  undefined  null  object
+//转换布尔值认定为false的有 undefined  null  NaN  0  ""(空字符串)  false
+//typeof 能返回的六种数据类型（区分数字类型）number(数字)、string(字符串)、boolean(布尔值)、undefined(未定义)、object(对象)、function(函数)
+//typeof(null)返回object  null在typeof唯一性会被认为是有对象占位,历史遗留问题
+
+// var i = 1;
+// for(var i = 0;i < 100;i++){
+//     if(i % 3 ==0 || i % 5 == 0 || i % 7 ==0){
+//         document.write(i + " ");
+//     }
+
+// }
+
+
+// 编写一程序，输入一个三位数的正整数，输出时反向输出。如：输入456，输出：654
+// var number = parseInt(window.prompt('请输入三位数的正整数：'));
+// var a = (number - (number % 100)) / 100;
+// var b = number % 100 - number % 10;
+// var c = (number % 10) * 100;
+// var newNumber = c + b + a;
+// document.write(newNumber);
+
+
+// var a = parseInt(window.prompt("input"));
+// var b = parseInt(window.prompt("input"));
+// var c = parseInt(window.prompt("input"));
+
+// if(a > b){
+//     if (a > c) {
+//         document.write(a);
+//     }else{
+//         document.write(c);
+//     }
+// }else{
+//     if(b > c){
+//         document.write(b);
+//     }else{
+//         document.write(c);
+//     }
+// }
+
+// var n = parseInt(window.prompt("input"));
+// var one = 1,
+//     two = 1,
+//     three;
+// if(n > 2){
+//     for(var i = 0;i < n-2; i++){
+//         three = one + two;
+//         one = two;
+//         two =three;
+//     }
+// document.write(three);
+// }else{
+//     document.write(1);
+// }
+
+// for(var i = 0; i < 100; i++){
+//     if (i % 7 == 0 || i % 10 == 7) {
+//         continue;
+//     }
+//     document.write(i + " ");
+// }
+
+// （函数）预编译的四部曲：
+// 1.创建 AO 对象 Activation Object(执行期上下文，作用是理解的作用域，函数产生的执行空间库)
+// 2.找形参和变量声明，将变量和形参名作为 AO 属性名，值为 undefined
+// 相当于 AO{
+//     a : undefined,
+//     b : undefined
+// }
+// 3.将实参值和形参统一（把实参值传到形参里）
+// 4.在函数体里面找函数声明，值赋予函数体
+// （先看自己的 AO，再看全局的 GO）
+
+// 全局的预编译三部曲：
+// 1、生成了一个 GO 的对象 Global Object（window 就是 GO）
+// 2、找形参和变量声明，将变量和形参名作为 GO 属性名，值为 undefined
+// 3、在函数体里面找函数声明，值赋予函数体
+//任何全局变量都是 window 上的属性
+//没有声明就是赋值了，归 window 所有，就是在 GO 里面预编译
+//先生成 GO 还是 AO?
+//想执行全局，先生成 GO，在执行 test 的前一刻生成 AO
+//在几层嵌套关系，近的优先，从近的到远的，有 AO 就看 AO，AO 没有才看 GO
+
+//一旦有重名的，一但有 a 变量又有 a 函数【如 function a (){}】，又在第一条访问的是a，一定是函数
+
+// function test(a , b){
+//     console.log(a);
+//     console.log(b);
+//     var b = 234;
+//     console.log(b);
+//     a = 123;
+//     console.log(a);
+//     function a (){}
+//     var a;
+//     b = 234;
+//     var b = function(){}
+//     console.log(a);
+//     console.log(b);
+// }
+// test(1);
+
+
+// AO{
+//     a: 123;
+//     b: function(){};
+// }
+// function a (){}; undefined; 234;123; 123;function(){};
+
+// function a(){
+//     function b(){
+//         var bb = 234;
+//         aa = 0;
+//     }
+//     var  aa= 123;
+//     b();
+//     console.log(aa);
+// }
+// var glab = 100;
+// a();
+
+
+
+// var demo = a();
+// function a(){
+//     var num = 100;
+//     function b() {
+//         num ++;
+//         console.log(num); //101
+//     }
+//     return b;
+// }
+// demo();
+// demo();
+
+//立即执行函数
+//定义：此类函数没有声明，在一次执行过后即释放（被销毁）。适合做初始化工作。
+//针对初始化功能的函数：只想让它执行一次的函数
+//立即执行的函数也有参数，也有返回值，有预编译
+
+
+
+//     原始值和引用值
+
+//     变量可以存放两种类型的值： 原始值 和 引用值
+//     原始值代表原始数据类型的值，也叫基本数据类型，包括 Number、Stirng、Boolean、Null、Underfined。
+//     引用值指的是复合数据类型的值，包括 Object(Array也是Object)、Function、Date、RegExp。
+//     根据数据类型的的不同，有的变量存储在栈中，有的存储在堆中。
+
+//     原始变量类型及他们的值存储在栈中，当把一个原始变量传递给另一个原始变量时，是把一个一段栈空间的内容复制到另一段栈空间，这两个原始值互相不影响。
+
+//     引用值是把引用变量的名称存储在栈中，但是把其实际对象存在堆中，且存在一个指针有变量名指向存储在堆中的实际对象，当把引用对象传递给另一个变量时，复制的其实是指向实际对象的指针，此时，若通过方法改变其中一个变量的值，则访问另一个变量时，其值也会随之加以改变;但若不通过方法，而是通过重新赋值 此时 相当于 重新开了一段内存 该值的原指针改变 ，则另外一个 值 不会随他的改变而改变。
+
+// 　  总结：
+// 　　Number、Stirng、Boolean、Null、Underfined这些基本数据类型，他们的值直接保存在栈中;
+// 　　Object、Function、Array、Date、RegExp这些引用类型，他们的引用变量储存在栈中，通过指针指向储存在堆中的实际对象
+
+//对象描述
+// var LiuTao = {
+//     name : "LaoLiu",
+//     age : 30,
+//     sex : "male",
+//     health : 100,
+//     smoke : function(){
+//         console.log('I am smoke! yeah');
+//         this.health --;
+//     },
+//     findfood : function(){
+//         console.log('I has an affinity for fine food');
+//         this.health ++;
+//     }
+
+// }
+// LiuTao.wife = "xiaoliu";
+// delete LiuTao.name
+
+
+// function Chen(color){
+//     this.name = '陈俊威';
+//     this.stature = '172';
+//     this.weight = '140';
+//     this.sex = "man"
+//     this.health = 100;
+//     this.color = color;
+//     this.run = function(){
+//         this.health --;
+//     }
+// }
+// var liu = new Chen('red');
+// var zhang = new Chen('black');
+
+//构造函数内部原理
+//前提必须要加 new，以下三步都是隐式的：
+//1.在函数体最前面隐式的加上 var this = {} 空对象
+//2.执行 this.xxx = xxx;
+//3.隐式的返回 return this
+//4.构造函数与其他函数区别的唯一特点是大驼峰命名,但凡是构造函数就要大写(例如:TheFirNa)
+
+// function Person(name, height){
+//     this.name = name;
+//     this.height = height;
+//     this.say = function(){
+//         console.log(this.say);
+//     }
+//     return 123; /*有 new 了以后就不能返回原始值，例如 123*/
+// }
+// var person = new Person('xiaochen', 172);
+
+//包装类
+//new String();
+//new Boolean();
+//new Number()
+//var num =123; → 原始值数字
+//只有原始值数字是原始值，原始值不能有属性和方法
+//属性和方法只有对象有，包括对象自己，数组，function
+// var str = "abcd";
+// str.lenhth = 2;
+// console.log(str.length)
+
+// var str = "abc";
+// str += 1;
+// var test = typeof(str);
+// if(test.length == 6){
+//     test.sign = "string"
+// };
+// console.log(test.sign)
+
+// var a = 5;
+// function test(){
+//     a = 0;
+//     alert(a);
+//     alert(this.a);
+//     var a;
+//     alert(a)
+// }
+// test();
+// new test();
+
+//charCodeAt() 方法可返回指定位置的字符的 Unicode 编码。这个返回值是 0 - 65535 之间的整数。
+//方法 charCodeAt() 与 charAt() 方法执行的操作相似，只不过前者返回的是位于指定位置的字符的编码，而后者返回的是字符子串。
+
+/*求字符串的字节长度*/
+// var str = "陈俊威";
+// function bytesLength(str) {
+//     var count = 0;
+//     for(var i = 0; i < str.length; i++){
+//         if (str.charCodeAt(i) > 255) {
+//             count += 2;
+//         }else{
+//             count ++;
+//         }
+//     }
+//     return count;
+// }
+
+//原型
+// 1.定义：原型是 function 对象的一个属性，它定义了构造函数制造出的对象的公共祖先。通过该构造函数产生的对象，可以继承该原型的属性和方法。原型也是对象。
+// 2.利用原型特点和概念，可以提取共有属性。
+// 3.对象属性的增删和原型上属性增删改查。
+// 4.对象如何查看原型 ==> 隐式属性   __proto__。不写默认为空对象
+// 5.对象如何查看对象的构造函数 ==> constructor。
+//prototype => 系统自定义好的  --原型
+
+// Car.prototype = {
+//     height : 172,
+//     LastName : "chen",
+// }
+// function Car(name, age){
+//     this.name = name;
+//     this.age = age;
+// }
+// var car = new Car('小陈',18);
+
+
+
+// Person.prototype.name　= 'sunny';
+// function Person(){
+//     //var this = {__proto__ : Person.prototype}
+// }
+// Person.prototype = function(){
+//    name : 'cherry';
+//}
+// var person = new Person();
+// person.name(); ==>  cherry
+
+// 1.先把 function Person(){}在预编译的过程中提到最上面
+// 2.再执行 Person.prototype.name = ‘sunny’这一样行
+// 3.再执行 Person.prototype = {name:’cherry’}
+// 4.最后执行 var person = new Person();执行到 new 的时候，才会发生//var this={__proto__:Person.prototype}
+// 5.下面的把上面的覆盖了
+// 6.答案是 cherry
+
+
+// 原型链
+// 1、如何构成原型链?（见下面例子）
+// 2、原型链上属性的增删改查原型链上的增删改查和原型基本上是一致的。只有本人有的权限，子孙是没有的。
+// 3、谁调用的方法内部 this 就是谁-原型案例
+// 4、绝大多数对象的最终都会继承自 Object.prototype
+// 5、Object.create(原型);       ==>  Object.create()在括号里面只能放 null 或者 Object，其余会报错
+// 6、原型方法上的重写
+
+//Grand.prototype.__proto__ = Object.prototype ==> Object.prototype 是原型链的终端
+// Grand.prototype.LastName = "chen";
+// function Grand() {}
+// var grand = new Grand();
+
+// Father.prototype = grand;
+// function Father(){
+//     this.name = 'xiaochen';
+// }
+// var father = new Father();
+
+// Son.prototype = father;
+// function Son(){
+//     this.age = 18;
+// }
+// var son = new Son();
+
+
+// Person.prototype = {
+//     name : 'a',
+//     sayName : function(){
+//         console.log(this.name);
+//     }
+// }
+// function Person(){
+//     this.name = 'b';
+// }
+// var person = new Person();
+
+//x.sayName ( )方法调用，就是 say.Name 里面的 this 指向，是谁调用的这个方法，this就指向谁
+//基本数据类型:Number  Boolean  String   Undefined    Null
+
+// Object.create(原型);
+// Object.create()在括号里面只能放 null 或者 Object，其余会报错 数组(Array)也是对象(object)
+// undefined 和 null 没有原型，也就不可能有 toString 方法
+
+// Person.prototype.name = "sunny";
+// function Person(){}
+// var person = Object.create(Person.prototype);
+
+// var obj = {name : 'sunny',age : 18};
+// var obj1 = Object.create(obj);
+
+//toString  ==> 拓展
+
+//var num = 123;
+//num.String(); ==> new Number(num).toString();
+//Number.prototype = function(){};
+
+// 数字想用 toString 方法，要经过包装类包装 new Number(num)然后.toString ==> new Number(num).toString();而 new Number(num).toString 的原型是 Nunber.prototype，而 Nunber.prototype 上面有一个.toString 方法，Nunber.prototype 也有原型 Nunber.prototype.__proto__，原型是Object.prototype
+// 假如 new Number 上面的 prototype 上面有这个 toString，那么就不用 Object.prototype的 toString。而这个 number 上面有这个 toString。
+
+//原型上有这个方法，我自己又写了一个和原型上同一名字，但不同功能的方法，叫做重写（同一名字的函数，不同重写方式）
+//通过返回值，形参列表不同传参
+//同样的名实现不同功能的，就是重写 -- 见下面例子
+
+/*---Object.prototype.toString = function(){}; -->系统隐形写法 ---*/
+// Person.prototype = {
+//     toString : function(){
+//         return '你好啊';
+//     }
+// };
+// function Person() {
+
+// }
+// var person = new Person();
+
+//Object.prototype.toString
+//Number.prototype.toString
+//String.prototype.toString
+//Boolean.prototype.toString
+//Array.prototype.toString
+
+// var num = 123;
+// num.toString();-->调用的Number.prototype.toString
+// Object.prototype.toString.call(123) =="[object Number]"  -->改变指向,变成object
+
+// var obj = Object.create(null);
+// obj.toString = function(){
+//     return 'hello world';
+// }
+// document.write(obj);
+//--> document.write 会隐式的调用 toString 方法，其实打印的是 toString 的结果
+//    相当于document.write(obj.toString());
+//    没有原型就不能 toString
+
+
+// toFixed 是保留两位有效数字,
+// 向上取整 Math.ceil (123.234)==>124
+// 向下取整 Math.floor (123.999)==>123
+// Math.random()是产生一个 0 到 1 区间的开区间 随机数
+
+// for(var i = 0; i < 100; i++){
+//     var num = Math.floor(Math.random() * 100);
+// }
+// console.log(num);
+
+
+// 注意：之前 js 在小数点后面最多能容纳 15-17 位，但是升级后能用科学计数法表示如 2e-17（是 2 乘以 10 的负 17 次方）而小数点前面只能容纳 16 位的运算， 可正常计算的范围是小数点前后 16 位
+
+
+// call和apply
+// 作用，改变 this 指向。
+// 区别，后面传的参数形式不同。
+
+// function Person(name,age){
+//     this.name = name;
+//     this.age = age;
+// }
+// var person = new Person('chen', 18);
+// var obj = {};
+// Person.call(obj,'xiaochen', 28);   /*Person() ==> Person.call()*/
+
+// 直接执行 Person.call ( )和 Person ( )没有区别
+// Person.call( );括号里面可以传东西
+// 如果 Person.call( obj );里面的 call 让 person 所有的 this 都变成 obj
+// 不 new 的话，this 默认指向 window。call 的使用必须要 new
+// call 的第一位参数用于改变 this 指向，第二位实参（对应第一个形参）及以后的参数,都当做正常的实参，传到形参里面去
+// 借用别人的方法，实现自己的功能
+
+// function Person(name, age, tel) {
+//     this.name = name;
+//     this.age = age;
+//     this.tel = tel;
+// }
+// function Num(name, age, tel, sex) {
+//     //var this = {name : '', age : '', tel : ''}
+//     Person.call(this,name,age,tel)
+//     this.sex = sex;
+// }
+// var num = new Num('chen', 28, 123456, '男');
+// var person = new Person('xiaochen', 1, 'son');
+
+// apply
+// 也是改变 this 指向的，只是传参列表不同，第一位也是改变 this 指向的人
+// 第二位,apply 只能传一个实参，而且必须传数组 argunments
+// call 需要把实参按照形参的个数传进去
+
+// function One(name, height) {
+//     this.name = name;
+//     this.height = height;
+// }
+// function Two(sex, tel){
+//     this.sex = sex;
+//     this.tel = tel;
+// }
+// function Three(name, height, sex, tel){
+//     One.apply(this, [name, height])
+//     Two.apply(this, [sex, tel])
+// }
+// var four = new Three('小陈', 172, '男', 13714147403)
+
+
+
+// 继承发展史
+// 1.传统形式 ==> 原型链   问题：过多的继承了没用的属性(案例如下)
+
+// Grand.prototype.LastName = "chen";
+// function Grand() {}
+// var grand = new Grand();
+
+// Father.prototype = grand;
+// function Father(){
+//     this.name = 'xiaochen';
+// }
+// var father = new Father();
+
+// Son.prototype = father;
+// function Son(){
+//     this.age = 18;
+// }
+// var son = new Son();
+
+
+// 2.借用构造函数 ==>利用 call、apply 所以不算标准的继承模式 (案例如下)
+// (1) 不能继承借用构造函数的原型
+// (2) 每次构造函数都要多走一个函数 ==>浪费效率
+// this 放进去的前提，这个函数必须是 new 来的
+
+// function Person(name, age) {
+//     this.name = name;
+//     this.age = age;
+// }
+// function Num(name, age, tel){
+//     Person.call(this,name,age)
+//     this.tel = tel;
+// }
+// var num = new Num();
+
+
+
+// 3.共享原型（较好的继承方法）不能随便改动自己的原型(案例如下)
+// Father.prototype.LastName = "chen";
+// function Father(){};
+// function Son(){};
+// Son.prototype = Father.prototype;
+// var son = new Son();
+// var father = new Father();
+
+// 封装函数,实现继承,
+// extend 和 inherit 都是继承的意思。
+// inherit 是 css 的一个值，也是继承的意思。
+// 文字类属性都有一个传递的特性：子元素没有设置文字类属性，子元素默认继承父元素的属性。 font-size:inheit;我没有就继承父亲的
+// 在 inherit（Target，Origin）里面传进去的值是构造函数，需要大驼峰式书写，origin是原始的意思，让 target（目标）继承 origin
+
+// 上面的案例可以改成如下:
+// Father.prototype.LastName = 'chen';
+// function Father(){};
+// function Son(){};
+// function inherit(Target, Origin) {
+//     Target.prototype = Origin.prototype
+// }
+
+// inherit(Son, Father); ---> 应该要先inherit继承,后使用,如果放定义对象后面就继承的是原来的空间.undefined;
+// var son = new Son();
+
+
+// 4.圣杯模式
+// 圣杯模式是在方法三的共有原型，但是在共有原型的基础上有改变。
+// 共享原型是：son.prototype=father.prototype
+// 圣杯模式是：另外加个构造函数 function F（）{}当做中间层，然后让 F 和 father 共有一个原型 F.prototype=father.prototype，然后 son.prototype = new F（）；使用原型链形成了继承关系，现在改 son.prototype 就不会影响 father.prototype
+//son.__proto__ --> new F().__proto__ --> Father.prototype
+
+function inherit (Target, Origin){
+    function F (){};
+    F.prototype = Origin.prototype;
+    Target.prototype = new F();
+    Target.prototype.constructor = Target;  //--> 原型上默认有个 constructor 默认指向他的构造函数son. constructor 应该指向 Son,指向 father 就是混乱了所以要指一下
+    Target.prototype.uber = Origin.prototype; // -->我们希望我们构造出的对象，能找到自己的超类，超级父级（究竟继承自谁）应该起名为super 但这个是保留字，我们就以 uber
+}
+
+
+Father.prototype.name = 'chen';
+function Father() {
+
+}
+function Son(){
+
+}
+inherit(Son, Father);
+Son.prototype.sex = '男';
+var son = new Son();
+var father = new Father();
+
+
+// 联系到闭包作用：可以实现封装，属性私有化。
+// 下面的var F 这个 F 形成了闭包，成为了这个函数的私有化变量，而且变成私有化变量就更好
+
+var inherit = (function(){
+    var  F = function(){};
+    return function(Target, Origin){
+        F.prototype = Origin.prototype;
+        Target.prototype = new F();
+        Target.prototype.constructor = Target;
+        Target.prototype.uber = Origin.prototype;
+    }
+}());
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</script>
+</body>
+
+</html>

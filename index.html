@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <!-- 闭包 -->
+
+  <!-- 1. 预编译 -->
+
+  <!-- 2. 闭包 -->
+
+  <script>
+    // 1. 预编译，预解析。代码执行前浏览器做的处理。
+    // var a;
+    // if (a === undefined) {
+    //   a = '123';
+    // }
+    // c = 123
+    // console.log(a); // function
+    // function a() {}
+    // console.log(a); // function
+
+    /*
+      GO = {
+        a: function a() {},
+        c: '123'
+      }
+    */
+
+    // 预编译过程。全局预编译过程。
+    // 1. 代码执行前期，产生GO对象，Global Object. 全局对象，装者我们要使用的变量或者函数。
+    // 2. 查找声明的变量 (var)，变量名作为GO的属性，属性值为 undefined。 变量声明提升
+    // 3. 查找声明的函数 (function ), 函数名作为Go属性，属性值是 函数体。 函数声明整体提升。
+    // 预编译之后， 代码执行期间，不看函数声明，和变量声明。
+   
+    /*
+    a = 10;
+    var a = 11;
+    function c() {}
+    处理之后代码
+    var a;
+    function c() {}
+    a = 10;
+    a = 11
+    */
+
+
+    // var name = 'window';
+    // function fn(name) {
+    //   console.log(name); // window
+    //   name = 'fn';
+    //   console.log(name); // fn
+    // }
+    // fn(name);
+    // console.log(name); // window
+
+    // 函数的预编译过程。函数执行之前，做的一些处理
+    // 1. 创建AO对象，Active Object 活跃对象。当前函数执行产生的对象。 可以有多个AO 多个函数执行就会产生多个AO。
+    // 2. 在函数内部查找声明变量，形式参数。把变量名或者形参名作为AO的属性，值为undefined.
+    //    变量声明提升。不会提升到全局，提升的范围在函数内部。局部变量。
+    // 3. 形参实参相统一。
+    // 4. 函数内部查找函数声明，函数名作为属性，函数体作为属性值。
+    /*
+      GO = {
+        name: 'window',
+        fn: function
+        // // fn 执行前AO
+        // AO(fn) = {
+        //   name: 'fn',
+        // }
+        // AO对象会被销毁，函数执行完。！！！！
+      }
+    */
+
+    //  var name = 'window';
+    //  function show() {
+    //    console.log(name);
+    //  }
+    //  function fn(name) {
+    //    console.log(name); // window
+    //    var name = 10;
+    //    show(); // window
+    //    console.log(name); // 10
+    //  }
+    //  show(); // window
+    //  fn(name);
+    // 作用域和作用域链
+    /*
+    GO = {
+      name: 'window',
+      show: function,
+      fn: function,
+    } 
+    // 函数执行，与执行位置无关，与定义位置有关。
+
+    AO GO 都是对应的作用域，变量的有效范围（作用域）
+    AO => AO =>  GO
+    */  
+    
+    // function f() {
+    //   var a = 1;
+    //   function f1() {
+    //     a ++;
+    //     console.log(a);
+    //   }
+    //   return f1;
+    // }
+    // var add = f();
+    // add();
+    // add();
+    /*
+      GO = {
+        f: function
+        add: f1,
+        AO(f) = {
+          a: 1,
+          f1: function
+        }
+      }
+      // 函数执行完，AO要销毁，对吗？？？？？
+
+      // AO 能被销毁的，正常现象
+      // AO 不能销毁的，闭包！！！。
+    */
+
+    // 函数里面返回函数，函数里面的引用值，被外层拿到。
+    
+
+     
+
+
+
+    function fun(n, o) {
+      console.log(o); // undefined, 0
+      var obj = {
+        fun: function (m) {
+          return fun(m, n);
+        }
+      }
+      return obj
+    }
+    var a = fun(0);
+    a.fun(1);
+    a.fun(2);
+    a.fun(3);
+    var b = fun(0).fun(1).fun(2).fun(3);
+    
+    /*
+    GO = {
+     fun: function
+     a: obj,
+     AO(fun(0, undefind)) = {
+       obj,
+       n : 0,
+       o : undefined,
+       AO (a.fun(1)obje.fun(1)) = {
+         m: 1
+         console.log(m, n)//1,0
+        //  fun(m,n) fun(1, 0)
+       }
+       AO: (a.fun(2) obj.fun(2)) = {
+         m: 2
+        fun(m, n) fun(2, 0)
+       }
+       AO: (a.fun(3) obj.fun(3)) = {
+         m: 3,
+         fun(m, n) fun(3, 0)
+       }
+     }
+     AO (fun(3,0)) = {
+       obj,
+       n: 3
+       o: 0
+     }
+    }
+    
+    
+    */
+
+
+    // var c = fun(0).fun(1);
+    // c.fun(2);
+    // c.fun(3);
+  </script>
+</body>
+</html>
